@@ -34,6 +34,25 @@ class LinkSchema(ma.Schema):
 link_schema = LinkSchema(strict=True)
 links_schema = LinkSchema(many=True, strict=True)
 
+# Routes
+
+# Create a Link
+@app.route('/',methods=['POST'])
+def create_link():
+    url = request.json['url']
+    # Hash from url
+    hash = base64.urlsafe_b64encode(hashlib.md5(url).digest())[:6]
+    hint = 0
+    # Validate hash (Unique)
+    if(Link.query.filter(Link.hash == hash).first()):
+        return jsonify({'hash':hash})
+    else:
+        new_link = Link(url,hash,hint)
+
+        db.session.add(new_link)
+        db.session.commit()
+
+        return link_schema.jsonify(new_link)
 
 # Run Server
 if __name__ == '__main__':
