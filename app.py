@@ -61,6 +61,15 @@ def get_links():
     res = links_schema.dump(links)
     return jsonify(res.data)
 
+# Get link
+@app.route('/<hash>',methods=['GET'])
+def get_link(hash):
+    link = Link.query.filter(Link.hash == hash).first()
+    if link:
+        link.hint += 1
+        db.session.commit()
+    return link_schema.jsonify(link)
+
 # Run Server
 if __name__ == '__main__':
     app.run(debug=True)
