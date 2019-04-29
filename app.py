@@ -54,6 +54,13 @@ def create_link():
 
         return link_schema.jsonify(new_link)
 
+# Get all Links
+@app.route('/',methods=['GET'])
+def get_links():
+    links = Link.query.all()
+    res = links_schema.dump(links)
+    return jsonify(res.data)
+
 # Run Server
 if __name__ == '__main__':
     app.run(debug=True)
