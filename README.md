@@ -2,4 +2,10 @@
 
 Proyecto de desarrollo de un API REST usando Flask para acortar URL.
 
+## Crear link
 
+```curl --header "Content-Type: application/json" --request POST --data '{"url":"http://google.com/"}' http://localhost:5000/```
+
+## Obtener todos los links
+
+```curl --header "Content-Type: application/json" --request GET http://localhost:5000/```
