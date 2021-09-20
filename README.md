@@ -1,13 +1,16 @@
-# Acortador de URL usando flask
+# URL Shortener in Flask
+Web service using Flask framework for Shortener URLs
 
-Proyecto de desarrollo de un API REST usando Flask para acortar URL.
+## Testing using CURL
 
-##Pruebas Usando CURL
+### Create new link
 
-### Crear link
+```bash 
+$ curl --header "Content-Type: application/json" --request POST --data '{"url":"http://github.com/"}' http://localhost:5000/
+```
 
-```curl --header "Content-Type: application/json" --request POST --data '{"url":"http://github.com/"}' http://localhost:5000/```
+### Get all links
 
-### Obtener todos los links
-
-```curl --header "Content-Type: application/json" --request GET http://localhost:5000/```
+```bash
+$ curl --header "Content-Type: application/json" --request GET http://localhost:5000/
+```
