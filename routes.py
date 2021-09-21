@@ -1,11 +1,10 @@
-import hashlib
 from flask import request, jsonify, redirect
-from app import app, db, Link, link_schema, links_schema
+from app import app, db
+from models import Link
+from schemas import link_schema, links_schema
+from utils import url_to_hash
 
-def url_to_hash(url, digits=6):
-    return hashlib.sha256(url.encode('utf-8')).hexdigest()[0:digits]
-
-# Create a Link
+# Create a new Link
 @app.route("/", methods=["POST"])
 def create_link():
     url = request.json["url"]
@@ -30,7 +29,7 @@ def get_links():
     return jsonify(res)
 
 
-# Get link
+# Redirect to Link
 @app.route("/<hash>", methods=["GET"])
 def get_link(hash):
     link = Link.query.filter(Link.hash == hash).first()
@@ -38,3 +37,4 @@ def get_link(hash):
         link.hint += 1
         db.session.commit()
     return redirect(link.url)
+
